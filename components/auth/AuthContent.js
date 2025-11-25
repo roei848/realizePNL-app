@@ -55,8 +55,13 @@ function AuthContent({ isLogin, onAuthenticate }) {
           credentialsInvalid={credentialsInvalid}
         />
 
-        <FlatButton onPress={switchAuthModeHandler} textStyle={styles.switchButton}>
-          {isLogin ? "Don't have an account? Sign up" : "Already have an account? Login"}
+        <FlatButton
+          onPress={switchAuthModeHandler}
+          textStyle={styles.switchButton}
+        >
+          {isLogin
+            ? "Don't have an account? Sign up"
+            : "Already have an account? Login"}
         </FlatButton>
       </View>
     </View>
@@ -73,29 +78,37 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: Colors.surface,
-    padding: 24,
-    borderRadius: 16,
-    borderColor: Colors.border,
-    borderWidth: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.55)", // dark casino glass
+    padding: 28,
+    borderRadius: 20,
+
+    borderWidth: 2,
+    borderColor: Colors.primary500, // gold border
+
     shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowRadius: 5,
-    elevation: 2,
+    shadowOpacity: 0.6,
+    shadowRadius: 12,
+    elevation: 12,
   },
 
   title: {
-    fontSize: 22,
-    fontWeight: "700",
-    marginBottom: 20,
+    fontSize: 28,
+    fontWeight: "900",
+    marginBottom: 28,
     textAlign: "center",
-    color: Colors.primary800,
+
+    color: Colors.primary100, // soft gold
+    textShadowColor: "#000",
+    textShadowRadius: 6,
   },
 
   switchButton: {
-    marginTop: 12,
-    color: Colors.primary500,
+    marginTop: 18,
+    color: Colors.primary500, // casino gold
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 17,
+    fontWeight: "600",
+    textShadowColor: "rgba(0,0,0,0.8)",
+    textShadowRadius: 3,
   },
 });

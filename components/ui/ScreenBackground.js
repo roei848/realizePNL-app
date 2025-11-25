@@ -1,14 +1,27 @@
-import { LinearGradient } from "expo-linear-gradient";
+import React from "react";
+import { ImageBackground, StyleSheet } from "react-native";
+
+const pokerBackground = require("../../assets/poker-table-green.jpg");
+// adjust the path depending on where ScreenBackground.js lives
 
 function ScreenBackground({ children }) {
   return (
-    <LinearGradient
-      colors={['#b2d8ff', '#ffffff']}
-      style={{ flex: 1 }}
+    <ImageBackground
+      source={pokerBackground}
+      resizeMode="cover"
+      style={styles.background}
     >
       {children}
-    </LinearGradient>
+    </ImageBackground>
   );
 }
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
+});
 
 export default ScreenBackground;

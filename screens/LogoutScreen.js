@@ -1,7 +1,7 @@
 // screens/LogoutScreen.js
 import { useContext, useCallback } from "react";
 import { Alert } from "react-native";
-import { logout as firebaseLogout } from "../api/auth";
+import { logout as firebaseLogout } from "../api/emailAuth";
 import { AuthContext } from "../store/auth-context";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
@@ -12,16 +12,16 @@ export default function LogoutScreen() {
   useFocusEffect(
     useCallback(() => {
       Alert.alert(
-        "התנתקות",
-        "האם אתה בטוח שברצונך להתנתק?",
+        "Logout",
+        "Are you sure you want to logout?",
         [
           {
-            text: "ביטול",
+            text: "Cancel",
             style: "cancel",
             onPress: () => navigation.goBack(),
           },
           {
-            text: "כן",
+            text: "Yes",
             style: "destructive",
             onPress: async () => {
               await firebaseLogout();

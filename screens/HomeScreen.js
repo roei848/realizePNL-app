@@ -1,18 +1,22 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
-import { useReports } from "../store/report-context";
-import { Colors } from "../constants/style";
-import Button from "../components/ui/Button";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Pressable,
+  ImageBackground,
+  Image,
+} from "react-native";
 import { logout } from "../api/emailAuth";
+import { useReports } from "../store/report-context";
 
 export default function HomeScreen() {
   const { reports, addReport } = useReports();
 
   const [gainInput, setGainInput] = useState("");
 
-  // Determine last report
   const lastReport = reports.length > 0 ? reports[0] : null;
-
   const lastGain = lastReport ? lastReport.gain : 0;
   const lastBalance = lastReport ? lastReport.balance : 0;
 
@@ -20,7 +24,6 @@ export default function HomeScreen() {
     if (!gainInput || isNaN(gainInput)) return;
 
     const gainValue = parseFloat(gainInput);
-
     const newBalance = lastBalance + gainValue;
 
     await addReport({
@@ -32,130 +35,180 @@ export default function HomeScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      {/* Title */}
-      <Text style={styles.title}>Home</Text>
+    <ImageBackground
+      style={styles.container}
+      source={require("../assets/poker-table-green.jpg")} // add felt texture here
+      resizeMode="cover"
+    >
+      <View style={styles.header}>
+        {/* Title */}
+        <Text style={styles.title}>Poker Status</Text>
 
-      {/* Last Game */}
-      <Text style={styles.lastGameText}>
-        Last Game: <Text style={styles.bold}>{lastGain}</Text>
-      </Text>
-
-      {/* Big Balance Circle */}
-      <View style={styles.circleContainer}>
-        <View style={styles.circle}>
-          <Text style={styles.circleText}>
-            {lastBalance}
+        {/* Last Game */}
+        <Text style={styles.lastGameText}>
+          Last Gain:{" "}
+          <Text
+            style={[styles.bold, lastGain >= 0 ? styles.green : styles.red]}
+          >
+            {lastGain >= 0 ? `+${lastGain}` : lastGain}₪
           </Text>
+        </Text>
+      </View>
+
+      {/* Roulette Balance Wheel */}
+      <View style={styles.wheelContainer}>
+        <Image
+          source={require("../assets/roullette.png")}
+          style={styles.wheelImage}
+        />
+        <View style={styles.balanceOverlay}>
+          <Text style={styles.balanceText}>{lastBalance}₪</Text>
         </View>
       </View>
 
-      {/* Update Row */}
+      {/* Update Stack Row */}
       <View style={styles.updateRow}>
-        <Text style={styles.updateLabel}>Update</Text>
-
+        <Text style={styles.updateText}>Update Stack</Text>
         <TextInput
           style={styles.input}
-          placeholder="Enter gain..."
-          placeholderTextColor={Colors.gray}
+          placeholder="Gain/Loss..."
+          placeholderTextColor="#aaa"
           keyboardType="numeric"
           value={gainInput}
           onChangeText={setGainInput}
         />
-
         <Pressable style={styles.updateButton} onPress={updateHandler}>
-          <Text style={styles.updateButtonText}>Add</Text>
+          <Text style={styles.updateButtonText}>Update</Text>
         </Pressable>
       </View>
-
-      <Button onPress={logout}>Logout</Button>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
-    padding: 20,
-    paddingTop: 60,
+    padding: 25,
+    paddingVertical: 80,
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+
+  header: {
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: Colors.primary800,
-    marginBottom: 20,
+    color: "#FFD700", // casino gold
+    marginBottom: 10,
+    textShadowColor: "black",
+    textShadowRadius: 4,
   },
 
   lastGameText: {
-    fontSize: 18,
-    color: Colors.gray,
-    marginBottom: 30,
+    fontSize: 20,
+    color: "#fff",
+    marginBottom: 25,
   },
 
   bold: {
-    color: Colors.primary800,
     fontWeight: "bold",
   },
 
-  circleContainer: {
+  green: {
+    color: "#00FF88",
+  },
+
+  red: {
+    color: "#FF4444",
+  },
+
+  wheelContainer: {
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 40,
   },
 
-  circle: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    backgroundColor: Colors.accent500,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: Colors.primary800,
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 6,
+  wheelImage: {
+    width: 260,
+    height: 260,
+    borderRadius: 130,
   },
 
-  circleText: {
-    fontSize: 40,
+  balanceOverlay: {
+    position: "absolute",
+    width: 180,
+    height: 180,
+    borderRadius: 90,
+    backgroundColor: "rgba(0,0,0,0.6)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  balanceText: {
+    fontSize: 42,
     fontWeight: "bold",
-    color: Colors.primary800,
+    color: "#FFD700",
+    textShadowColor: "#000",
+    textShadowRadius: 8,
   },
 
   updateRow: {
     flexDirection: "row",
     alignItems: "center",
+    marginTop: 20,
     gap: 10,
   },
 
-  updateLabel: {
+  updateText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: Colors.primary800,
+    color: "#fff",
+    width: 120,
   },
 
   input: {
     flex: 1,
-    backgroundColor: Colors.surface,
-    borderColor: Colors.border,
+    backgroundColor: "rgba(0,0,0,0.4)",
     borderWidth: 1,
-    padding: 10,
+    borderColor: "#FFD700",
     borderRadius: 10,
+    padding: 10,
     fontSize: 16,
-    color: Colors.primary800,
+    color: "#fff",
   },
 
   updateButton: {
-    backgroundColor: Colors.primary500,
+    backgroundColor: "#D40000", // casino red
     paddingVertical: 10,
-    paddingHorizontal: 18,
+    paddingHorizontal: 16,
     borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#FFD700",
   },
 
   updateButtonText: {
-    color: Colors.primary800,
+    color: "#FFD700",
+    fontWeight: "bold",
+  },
+
+  logoutButton: {
+    marginTop: 40,
+    alignSelf: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderWidth: 1,
+    borderColor: "#FFD700",
+    borderRadius: 10,
+    backgroundColor: "rgba(0,0,0,0.4)",
+  },
+
+  logoutText: {
+    color: "#FFD700",
+    fontSize: 18,
     fontWeight: "bold",
   },
 });

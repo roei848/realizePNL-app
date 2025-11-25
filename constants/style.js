@@ -1,24 +1,33 @@
 export const Colors = {
-  // Primary
-  primary100: "#DFF2FB",  // very light blue background
-  primary300: "#B5E1F8",  // medium light blue
-  primary500: "#97CFF3",  // main blue
-  primary800: "#10171C",  // dark text/nav color
+  // 🎰 Casino Primary (Gold + Deep Black)
+  primary100: "#FFE9A8",   // soft gold highlight
+  primary300: "#FFD86B",   // warm mid gold
+  primary500: "#FFC933",   // main casino gold
+  primary800: "#1A1A1A",   // deep black for text / nav
 
-  // Accent
-  accent100: "#D9F5EA",   // soft mint tint
-  accent500: "#A7E8D1",   // main mint accent
-  accent800: "#4EBE9C",   // deeper mint tone
+  // ♥️ Casino Accent (Deep Red)
+  accent100: "#FFCDD2",    // soft red tint
+  accent500: "#D40000",    // casino red (buttons, highlights)
+  accent800: "#8B0000",    // dark poker red
+
+  // ♣️ Poker Table Greens
+  tableGreenLight: "#3A8F3A",   // bright felt green
+  tableGreen: "#0B6E27",        // classic poker table green
+  tableGreenDark: "#054D19",    // deeper felt shade
 
   // Background & Surfaces
-  background: "#F7F7F7",
-  surface: "#FFFFFF",
-  border: "#E6E6E6",
+  background: "#054D19",     // deep felt by default
+  surface: "rgba(0,0,0,0.4)", // translucent casino overlay
+  border: "#FFD86B",         // gold border
 
   // Status Colors
-  error100: "#FFEAEA",
-  error500: "#FF6B6B",
-  success100: "#E6F9EB",
-  success500: "#4CAF50",
-  gray: "#666",
+  error100: "#FFD7D7",
+  error500: "#FF4444",
+  success100: "#C8F7C5",
+  success500: "#00FF88",
+
+  // Neutral
+  gray: "#AAAAAA",
+  white: "#FFFFFF",
+  black: "#000000",
 };

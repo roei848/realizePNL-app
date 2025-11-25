@@ -4,6 +4,7 @@ import { Alert } from "react-native";
 import { logout as firebaseLogout } from "../api/emailAuth";
 import { AuthContext } from "../store/auth-context";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import ScreenBackground from "../components/ui/ScreenBackground";
 
 export default function LogoutScreen() {
   const authCtx = useContext(AuthContext);
@@ -34,5 +35,5 @@ export default function LogoutScreen() {
     }, [navigation, authCtx])
   );
 
-  return null;
+  return <ScreenBackground />;
 }

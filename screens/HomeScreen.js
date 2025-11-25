@@ -8,7 +8,6 @@ import {
   ImageBackground,
   Image,
 } from "react-native";
-import { logout } from "../api/emailAuth";
 import { useReports } from "../store/report-context";
 
 export default function HomeScreen() {

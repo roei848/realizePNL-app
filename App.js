@@ -2,8 +2,10 @@ import { useContext } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 
 import ReportsProvider from "./store/report-context";
 import AuthContextProvider, { AuthContext } from "./store/auth-context";
@@ -28,6 +30,8 @@ function AuthStack() {
 }
 
 function AuthenticatedStack() {
+  const insets = useSafeAreaInsets();
+
   return (
     <ReportsProvider>
       <Tab.Navigator
@@ -38,7 +42,8 @@ function AuthenticatedStack() {
             backgroundColor: "rgba(0,0,0,0.7)",
             borderTopColor: Colors.primary500, // gold
             borderTopWidth: 1.5,
-            height: 65,
+            height: 70 + insets.bottom,
+            paddingBottom: insets.bottom,
           },
 
           tabBarActiveTintColor: Colors.primary500, // gold
@@ -49,14 +54,14 @@ function AuthenticatedStack() {
             fontWeight: "600",
           },
 
-          tabBarIcon: ({ color, size }) => {
+          tabBarIcon: ({ color }) => {
             let iconName;
 
             if (route.name === "Home") iconName = "home";
             if (route.name === "History") iconName = "list";
             if (route.name === "Logout") iconName = "log-out-outline";
 
-            return <Ionicons name={iconName} size={22} color={color} />;
+            return <Ionicons name={iconName} size={24} color={color} />;
           },
         })}
       >
@@ -85,11 +90,11 @@ function Navigation() {
 
 export default function App() {
   return (
-    <>
+    <SafeAreaProvider>
       <StatusBar style="auto" />
       <AuthContextProvider>
         <Navigation />
       </AuthContextProvider>
-    </>
+    </SafeAreaProvider>
   );
 }
